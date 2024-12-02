@@ -1,0 +1,121 @@
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start; /* Ensures the left section starts from the left */
+  }
+  
+  .project-tag {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  .project-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-primary);
+  }
+  
+  .footer-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .fork-button {
+    background-color: var(--neon-cyan);
+    color: var(--background);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .fork-button:hover {
+    background-color: var(--neon-green);
+  }
+  
+  .star-button-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .star-button {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .star-count {
+    font-size: 1rem;
+    color: var(--neon-cyan);
+  }
+  
+  /* Align the right section to the left */
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Change from flex-end to flex-start to align to left */
+    gap: 0.5rem;
+  }
+  
+  .made-with-love {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  .heart {
+    color: var(--neon-red);
+  }
+  
+  .creator-name {
+    font-weight: bold;
+  }
+  
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .social-icons svg {
+    fill: var(--text-secondary);
+    transition: fill 0.3s ease;
+  }
+  
+  .social-icons svg:hover {
+    fill: var(--neon-cyan);
+  }
+  
