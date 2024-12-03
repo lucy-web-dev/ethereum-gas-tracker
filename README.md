@@ -16,7 +16,7 @@ The Ethereum Gas Tracker provides real-time insights into gas fees and transacti
 
 ## Tech-Stack
 - Frontend: React.js
-- Backend: Node.js, Express.js
+- Backend: Node.js,
 - Blockchain Data: Etherscan API
 
 ## Features
