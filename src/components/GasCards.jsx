@@ -18,7 +18,7 @@ let GasCards = ({ gasData }) => (
         </div>
 
         <div className="card-details">
-          <p className="fee-line">Base: {data.base.toFixed(3)} Gwei | Priority: {data.priority.toFixed(3)} Gwei</p>
+          <p className="fee-line">Base: {data.base.toFixed(3)} Gwei  Priority: {data.priority.toFixed(3)} Gwei</p>
         </div>
 
         <div className="card-footer">
