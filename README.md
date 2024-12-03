@@ -9,7 +9,7 @@ The Ethereum Gas Tracker provides real-time insights into gas fees and transacti
 - [Features](#features)
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
-    - [How to Run the Crypto Wallet](#how-to-run-the-application)
+    - [How to Run the Application](#how-to-run-the-application)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [Contact](#contact)
