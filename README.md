@@ -61,12 +61,11 @@ This Ethereum Gas Tracker application includes the following features:
 
 <table>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/a9bbada9-1134-4eb5-8334-bc634f11fde4" alt="Screenshot 9" width="310"></td>
-    <td><img src="https://github.com/user-attachments/assets/1b1b8002-e426-4cc1-b7e1-fd60ece29570" alt="Screenshot 1" width="310"></td>
-    <td><img src="https://github.com/user-attachments/assets/59e50793-f911-4c2d-af30-a1f4766fa046" alt="Screenshot 2" width="310"></td>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-header.png?raw=true" alt="Ethereyum Gas Tracker Template Header" width="310"></td>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-transaction-table.png?raw=true" alt="Ethereyum Gas Tracker Template Transaction Table" width="310"></td>
+    <td><img src="https://github.com/0xmetaschool/ethereum-gas-tracker/blob/main/public/ethereum-gas-tracker-web3-template-graph.png?raw=true" alt="Ethereyum Gas Tracker Template Graph" width="310"></td>
   </tr>
 </table>
-
 
 ## Contributing
 
