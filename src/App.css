@@ -1,18 +1,15 @@
-/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* CSS Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Default button styles */
 .button-group button {
-  background-color: rgba(255, 255, 255, 0.05);; /* Light background */
+  background-color: rgba(255, 255, 255, 0.05);
   border: none;
-  color: #ffffff; /* Neutral gray */
+  color: #ffffff;
   padding: 10px 15px;
   margin: 0 5px;
   font-size: 14px;
@@ -22,20 +19,17 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Hover effect */
 .button-group button:hover {
   border: #00fff2;
 }
 
-/* Active button styles for Clyne theme */
 .button-group button.active {
-  background-color: rgba(255, 255, 255, 0.05);; /* Clyne primary color */
-  color: #00fff2; /* White text */
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #00fff2;
   font-weight: 600;
   box-shadow: 0px 4px 6px rgba(34, 211, 238, 0.4);
   border-color: #00fff2;
 }
-
 
 .network-status {
   display: flex;
@@ -55,19 +49,14 @@
 }
 
 :root {
-  /* Base Colors */
   --background: rgba(0, 0, 0, 0.95);
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --text-primary: #FFFFFF;
   --text-secondary: rgba(255, 255, 255, 0.7);
-
-  /* Neon Colors */
   --neon-cyan: #00fff2;
   --neon-magenta: #ff00ea;
   --neon-purple: #7000ff;
-  
-  /* Status Colors */
   --neon-green: #4dff91;
   --neon-yellow: #fff94d;
   --neon-red: #ff4d4d;
@@ -81,7 +70,6 @@ body {
   min-height: 100vh;
 }
 
-/* App Container */
 .app {
   position: relative;
   min-height: 100vh;
@@ -89,7 +77,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background Effects */
 .app-background {
   position: fixed;
   top: 0;
@@ -100,7 +87,6 @@ body {
   overflow: hidden;
 }
 
-/* Glass Container */
 .glass-container {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
@@ -113,7 +99,6 @@ body {
   padding-bottom: 40px;
 }
 
-/* Header Styles */
 .glass-header {
   text-align: center;
   padding: 2rem;
@@ -158,7 +143,7 @@ header h1 {
 }
 
 .update-info .eth-price {
-  color: #E0E0E0;  /* Changed to white */
+  color: #E0E0E0; 
 }
 
 .network-status {
@@ -185,7 +170,6 @@ header h1 {
   display: inline-block;
 }
 
-/* Header Stats */
 .header-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -225,7 +209,6 @@ header h1 {
   margin-top: 0.5rem;
 }
 
-/* Main Content */
 .app-content {
   display: grid;
   gap: 2rem;
@@ -235,7 +218,6 @@ header h1 {
   padding: 0 1rem;
 }
 
-/* Table Styles */
 .gas-table-section {
   padding: 2rem;
 }
@@ -319,13 +301,11 @@ header h1 {
   border-bottom: none;
 }
 
-/* Cost column specific styling */
 .gas-table td:last-child {
   font-family: 'JetBrains Mono', monospace;
   color: var(--neon-green);
 }
 
-/* Pagination Styles */
 .pagination {
   display: flex;
   justify-content: center;
@@ -396,7 +376,6 @@ header h1 {
   text-align: center;
 }
 
-/* Sort indicators */
 .sort-indicator {
   display: inline-block;
   margin-left: 0.5rem;
@@ -413,7 +392,6 @@ header h1 {
   color: var(--neon-cyan);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .gas-table td, 
   .gas-table th {
@@ -437,7 +415,6 @@ header h1 {
   }
 }
 
-/* Graph Styles */
 .graph-wrapper {
   width: 100%;
   height: 400px;
@@ -453,7 +430,6 @@ header h1 {
   padding: 0 1rem;
 }
 
-/* Loading State */
 .loading-container {
   position: fixed;
   top: 50%;
@@ -479,7 +455,6 @@ header h1 {
   }
 }
 
-/* Error State */
 .error-container {
   position: fixed;
   top: 50%;
@@ -499,7 +474,6 @@ header h1 {
   color: var(--neon-red);
 }
 
-/* Footer */
 .app-footer {
   text-align: center;
   padding: 1.5rem;
@@ -511,7 +485,6 @@ header h1 {
   margin-top: 0.5rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .app {
     padding: 1rem;
@@ -544,7 +517,6 @@ header h1 {
   }
 }
 
-/* Animation Keyframes */
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px var(--neon-cyan);

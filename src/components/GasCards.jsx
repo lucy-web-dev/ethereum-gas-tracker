@@ -1,5 +1,24 @@
+/**
+ * @fileoverview GasCards Component
+ * Displays real-time Ethereum gas prices in a card-based layout
+ */
+
 import React from "react";
 import "./css/GasCards.css";
+
+/**
+ * GasCards Component
+ * 
+ * Renders three cards showing LOW, AVG, and HIGH gas prices with
+ * their respective base fees, priority fees, and time estimates.
+ * Also displays last block and next update information.
+ * 
+ * @param {Object} props
+ * @param {Object} props.gasData - Object containing gas price data for LOW, AVG, HIGH categories
+ * @param {number} props.nextUpdateIn - Seconds until next data update
+ * @param {string} props.lastBlock - Latest Ethereum block number
+ * @returns {React.JSX.Element} Cards displaying gas prices and status
+ */
 
 let GasCards = ({ gasData, nextUpdateIn, lastBlock }) => (
   <div className="gas-tracker-container">
@@ -36,11 +55,3 @@ let GasCards = ({ gasData, nextUpdateIn, lastBlock }) => (
 );
 
 export default GasCards;
-/*
-Gas Price
-Base Fee
-Priority Fee
-Estimated Cost
-Time Estimate
-
- */

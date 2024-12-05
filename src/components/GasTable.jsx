@@ -1,5 +1,21 @@
+/**
+ * @fileoverview GasTable Component - Displays Ethereum transaction costs in a sortable table format.
+ * Shows estimated costs for different transaction types under various gas price scenarios (low, average, high).
+ * Includes interactive sorting functionality for all columns.
+ */
+
 import React from 'react';
 import './css/GasTable.css';
+
+/**
+ * GasTable Component - Renders a sortable table of Ethereum transaction costs
+ * @param {Object[]} transactionData - Array of transaction objects with action and gasLimit properties
+ * @param {Object} gasData - Current gas prices containing low, avg, and high price data
+ * @param {number} ethPrice - Current ETH price in USD
+ * @param {Function} onSort - Callback function for handling column sorting
+ * @param {Object} sortConfig - Current sort configuration with key and direction
+ * @returns {JSX.Element} A table displaying transaction costs with sortable columns
+ */
 
 let GasTable = ({ transactionData, gasData, ethPrice, onSort, sortConfig }) => {
   let getClassNamesFor = (name) => {

@@ -56,13 +56,11 @@
   text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
 }
 
-/* Equal width columns */
 .gas-table th,
 .gas-table td {
   width: calc(100% / 5);
 }
 
-/* Cost colors */
 .cost-low {
   color: #4DFF91;
   transition: all 0.3s ease;
@@ -78,18 +76,15 @@
   transition: all 0.3s ease;
 }
 
-/* Monospace font for numbers */
 .monospace {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Sort indicator styles */
 .sort-indicator {
   display: inline-block;
   margin-left: 8px;
 }
 
-/* First and last column padding adjustments */
 .gas-table th:first-child,
 .gas-table td:first-child {
   padding-left: 30px;

@@ -1,8 +1,7 @@
-/* General container styling */
 .class_1 {
     font-family: 'Space Grotesk', sans-serif;
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
+    background-color: #121212;
+    color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -12,14 +11,12 @@
    
   }
   
-  /* Graph toggle button container */
   .class_2 {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
   }
   
-  /* Toggle buttons */
   .class_2 button {
     background-color: #282828;
     color: cyan;
@@ -46,10 +43,8 @@
     font-weight: bold;
   }
   
-  /* Chart container styling */
   .class_1 > div {
     position: relative;
     height: 40px;
     width: 100%;
   }
-  

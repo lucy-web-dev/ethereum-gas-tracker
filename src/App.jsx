@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Main application component for the Ethereum Gas Tracker.
+ * Provides real-time gas price monitoring, transaction cost estimation,
+ * and historical gas price visualization through graphs and tables.
+ * Integrates with Etherscan API for live data updates every 10 seconds.
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import GasCards from "./components/GasCards";
@@ -10,9 +17,15 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip,
 
 let API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY;
 
+/**
+ * Main App component that orchestrates the Ethereum Gas Tracker application
+ * Manages gas prices, ETH price, transaction data, and UI state
+ * @returns {JSX.Element} The complete application UI
+ */
 function App() 
 {
-  let [selectedGraph, setSelectedGraph] = useState("1hour"); // Track the selected graph ("1hour" or "24hours")
+  // State management for gas tracking and UI
+  let [selectedGraph, setSelectedGraph] = useState("1hour");
   let [gasData, setGasData] = useState(null);
   let [ethPrice, setEthPrice] = useState(0);
   let [lastBlock, setLastBlock] = useState(null);
@@ -22,7 +35,6 @@ function App()
   let [blockTime, setBlockTime] = useState(13);
   let [sortConfig, setSortConfig] = useState({ key: "gasLimit", direction: "asc" });
   let [showHourlyGraph, setShowHourlyGraph] = useState(false);
-  
   
   // Pagination state
   let [currentPage, setCurrentPage] = useState(1);
@@ -56,8 +68,11 @@ function App()
     { action: "SuperRare: Offer", gasLimit: 85191 },
   ]);
 
-  
-
+  /**
+   * Fetches current gas prices, ETH price, and blockchain status from Etherscan
+   * Updates application state with the latest data every 10 seconds
+   * @async
+   */
   let fetchGasData = async () => 
     {
     try {
@@ -86,7 +101,7 @@ function App()
           price: lowPrice,
           base: basePrice,
           priority: lowPrice - basePrice,
-          cost: calculateCost(lowPrice, "21000", ethPriceInUsd),  //gasLimit =21000
+          cost: calculateCost(lowPrice, "21000", ethPriceInUsd),  
           time: calculateTime(lowPrice, "low"),
         },
         avg: {
@@ -107,7 +122,7 @@ function App()
 
       setEthPrice(ethPriceInUsd);
 
-      let blockNumber = parseInt(statusResponse.data.result, 16); // Convert hex to decimal
+      let blockNumber = parseInt(statusResponse.data.result, 16); 
       setLastBlock(blockNumber);
 
       setLoading(false);
@@ -122,18 +137,35 @@ function App()
     }
   };
 
+  /**
+   * Calculates transaction cost in USD based on gas parameters
+   * @param {number} gasPrice - Current gas price in Gwei
+   * @param {string} gasLimit - Gas limit for the transaction
+   * @param {number} ethPriceInUsd - Current ETH price in USD
+   * @returns {string} Estimated cost in USD, fixed to 2 decimal places
+   */
   let calculateCost = (gasPrice, gasLimit, ethPriceInUsd) => 
   {
       let costInETH = (gasPrice * gasLimit) / 1e9;
       return (costInETH * ethPriceInUsd).toFixed(2);
   };
 
+  /**
+   * Estimates transaction confirmation time based on gas price and priority
+   * @param {number} gasPrice - Gas price in Gwei
+   * @param {string} type - Priority level ('low', 'avg', or 'high')
+   * @returns {string} Estimated confirmation time in seconds
+   */
   let calculateTime = (gasPrice, type) => 
   {
       let blocksToConfirm = type === "low" ? Math.ceil(120 / gasPrice) : type === "avg" ? Math.ceil(60 / gasPrice) : Math.ceil(30 / gasPrice);
       return `~ ${Math.ceil(blocksToConfirm * blockTime)} sec`;
   };
 
+  /**
+   * Handles sorting of transaction data in the table
+   * @param {string} key - Column key to sort by
+   */
   let handleSort = (key) => 
   {
     let direction = "asc";
@@ -157,7 +189,6 @@ function App()
     }
   });
 
-  // Pagination logic: calculate the data to be displayed for the current page
   let startIndex = (currentPage - 1) * rowsPerPage;
   let paginatedData = sortedData.slice(startIndex, startIndex + rowsPerPage);
 
@@ -167,7 +198,7 @@ function App()
     let interval = setInterval(fetchGasData, 10000);
     let countdownInterval = setInterval(() => 
     {
-      setNextUpdateIn((prev) => (prev > 1 ? prev - 1 : 10));  // Countdown from 10 seconds
+      setNextUpdateIn((prev) => (prev > 1 ? prev - 1 : 10));
     }, 1000);
 
     let timer = setInterval(() => {

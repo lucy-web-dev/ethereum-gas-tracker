@@ -1,76 +1,92 @@
+/**
+ * @fileoverview GasGraphSwitcher Component
+ * Interactive graph component displaying Ethereum gas price trends over time
+ * Supports 1-hour and 24-hour views with real-time updates
+ */
+
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from "chart.js";
 import './css/GasGraphSwitcher.css';
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
-let i =true;
-let GasGraphSwitcher = ({nextUpdateIn}) => 
-{
 
-  let [oneHourGraphData, set_Graph_1] = useState({  labels: [], low: [], avg: [], high: [] });
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+
+/**
+ * GasGraphSwitcher Component
+ * 
+ * Renders interactive line graphs showing gas price trends:
+ * - 1-hour view: Updates every 10 seconds
+ * - 24-hour view: Updates every 10 minutes with averaged data
+ * Includes real-time data fetching and automatic updates
+ * 
+ * @param {Object} props
+ * @param {number} props.nextUpdateIn - Seconds until next data update
+ * @returns {React.JSX.Element} Interactive gas price trend graphs with switching capability
+ */
+
+let GasGraphSwitcher = ({nextUpdateIn}) => {
+  let [oneHourGraphData, set_Graph_1] = useState({ labels: [], low: [], avg: [], high: [] });
   let [twentyFourHourGraphData, setTwentyFourHourGraphData] = useState({ labels: [], low: [], avg: [], high: [] });
   let [minuteData, setMinuteData] = useState({ low: [], avg: [], high: [] });
   let [fiveMinuteSum, setFiveMinuteSum] = useState({ low: 0, avg: 0, high: 0, count: 0 });
   let [activeGraph, setActiveGraph] = useState('1hour');
   let [nextUpdate1Hour, setNextUpdate1Hour] = useState(10);
   let [nextUpdate24Hour, setNextUpdate24Hour] = useState(600);
-
+  let [initialLoad, setInitialLoad] = useState(true);
   
   let API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY;
 
-
-  // Unified function to fetch gas data for both graphs
-  
+  /**
+   * Fetches current gas prices from Etherscan API and updates graph data
+   * Handles both 1-hour and 24-hour data updates
+   */
   let fetchGasData = async () => {
-    try 
-    {
-          let response = await axios.get(
-            `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${API_KEY}`
-          );
-          let gasResult = response.data.result;
+    try {
+      let response = await axios.get(
+        `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${API_KEY}`
+      );
+      let gasResult = response.data.result;
 
-          let lowPrice = parseFloat(gasResult.SafeGasPrice);
-          let avgPrice = parseFloat(gasResult.ProposeGasPrice);
-          let highPrice = parseFloat(gasResult.FastGasPrice);
+      let lowPrice = parseFloat(gasResult.SafeGasPrice);
+      let avgPrice = parseFloat(gasResult.ProposeGasPrice);
+      let highPrice = parseFloat(gasResult.FastGasPrice);
+      let currentTime = new Date().toLocaleTimeString("en-GB", { 
+        hour: "2-digit", 
+        minute: "2-digit", 
+        second: "2-digit" 
+      });
 
-          let currentTime = new Date().toLocaleTimeString("en-GB", { hour: "2-digit",  minute: "2-digit", second: "2-digit" });
+      if (lowPrice && avgPrice && highPrice) {
+        // Update 1-hour graph data
+        set_Graph_1(prevData => ({
+          labels: [...prevData.labels, currentTime].slice(-360),
+          low: [...prevData.low, lowPrice].slice(-360),
+          avg: [...prevData.avg, avgPrice].slice(-360),
+          high: [...prevData.high, highPrice].slice(-360),
+        }));
 
-          
-          // Update 1-hour graph data
-          if (lowPrice && avgPrice && highPrice)
-          {
-          set_Graph_1((prevData) => ({
-                                          labels: [...prevData.labels, currentTime].slice(-360),
-                                          low: [...prevData.low, lowPrice].slice(-360),
-                                          avg: [...prevData.avg, avgPrice].slice(-360),
-                                          high: [...prevData.high, highPrice].slice(-360),
-                                    }));
+        // Initial 24-hour data setup
+        if (initialLoad) {
+          setInitialLoad(false);
+          setTwentyFourHourGraphData(prevData => ({
+            labels: [...prevData.labels, currentTime].slice(-24),
+            low: [...prevData.low, lowPrice].slice(-24),
+            avg: [...prevData.avg, avgPrice].slice(-24),
+            high: [...prevData.high, highPrice].slice(-24),
+          }));
+        }
 
-
-        if(i == true)
-          {
-            i=false;
-            setTwentyFourHourGraphData((prevData) => (
-              {
-                labels: [...prevData.labels, currentTime].slice(-24),
-                low: [...prevData.low, lowPrice].slice(-24),
-                avg: [...prevData.avg, avgPrice].slice(-24),
-                high: [...prevData.high, highPrice].slice(-24),
-              }));
-          }
-                                    
-           // Accumulate data for 1-minute averages
-          setMinuteData((prevData) => ({
-                                          low: [...prevData.low, lowPrice],
-                                          avg: [...prevData.avg, avgPrice],
-                                          high: [...prevData.high, highPrice],
-                                      }));
-                                    }
-    } 
-    catch (error) {
+        // Update minute data for averaging
+        setMinuteData(prevData => ({
+          low: [...prevData.low, lowPrice],
+          avg: [...prevData.avg, avgPrice],
+          high: [...prevData.high, highPrice],
+        }));
+      }
+    } catch (error) {
       console.error("Error fetching gas data:", error);
-      set_Graph_1((prevData) => ({
+      set_Graph_1(prevData => ({
         ...prevData,
         labels: [...prevData.labels, "N/A"].slice(-60),
         low: [...prevData.low, prevData.low.at(-1)].slice(-60),
@@ -80,10 +96,9 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     }
   };
 
-
   useEffect(() => {
     let interval = setInterval(() => {
-      setNextUpdate1Hour((prev) => (prev > 0 ? prev - 1 : 10));
+      setNextUpdate1Hour(prev => (prev > 0 ? prev - 1 : 10));
     }, 1000);
 
     if (nextUpdate1Hour === 0) fetchGasData();
@@ -91,14 +106,9 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     return () => clearInterval(interval);
   }, [nextUpdate1Hour]);
 
-
-
-
-
-
   useEffect(() => {
     let interval = setInterval(() => {
-      setNextUpdate24Hour((prev) => (prev > 0 ? prev - 1 : 600));
+      setNextUpdate24Hour(prev => (prev > 0 ? prev - 1 : 600));
     }, 1000);
 
     if (nextUpdate24Hour === 0) fetchGasData();
@@ -106,34 +116,21 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     return () => clearInterval(interval);
   }, [nextUpdate24Hour]);
 
-
-
-
-
-
-
-  // Calculate minute averages and update 5-minute graph
-  useEffect(() => 
-  {
-    let minuteInterval = setInterval(() => 
-    {
-      setMinuteData((prevData) => {
-        if (prevData.low.length > 0) 
-        {
+  useEffect(() => {
+    let minuteInterval = setInterval(() => {
+      setMinuteData(prevData => {
+        if (prevData.low.length > 0) {
           let avgLow = prevData.low.reduce((sum, val) => sum + val, 0) / prevData.low.length;
           let avgAvg = prevData.avg.reduce((sum, val) => sum + val, 0) / prevData.avg.length;
           let avgHigh = prevData.high.reduce((sum, val) => sum + val, 0) / prevData.high.length;
 
-          // Update five-minute sum
-          setFiveMinuteSum((prevSum) => (
-          {
+          setFiveMinuteSum(prevSum => ({
             low: prevSum.low + avgLow,
             avg: prevSum.avg + avgAvg,
             high: prevSum.high + avgHigh,
             count: prevSum.count + 1,
           }));
 
-          // Reset minute data for the next interval
           return { low: [], avg: [], high: [] };
         }
         return prevData;
@@ -143,14 +140,10 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     return () => clearInterval(minuteInterval);
   }, []);
 
-  // Update 24-hour graph every hour
   useEffect(() => {
-    let fiveMinuteInterval = setInterval(() => 
-    {
-      setFiveMinuteSum((prevSum) => 
-      {
-        if (prevSum.count > 0) 
-        {
+    let fiveMinuteInterval = setInterval(() => {
+      setFiveMinuteSum(prevSum => {
+        if (prevSum.count > 0) {
           let avgLow = prevSum.low / prevSum.count;
           let avgAvg = prevSum.avg / prevSum.count;
           let avgHigh = prevSum.high / prevSum.count;
@@ -161,15 +154,13 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
             second: "2-digit" 
           });
 
-          setTwentyFourHourGraphData((prevData) => (
-          {
+          setTwentyFourHourGraphData(prevData => ({
             labels: [...prevData.labels, currentTime].slice(-148),
             low: [...prevData.low, avgLow].slice(-148),
             avg: [...prevData.avg, avgAvg].slice(-148),
             high: [...prevData.high, avgHigh].slice(-148),
           }));
 
-          // Reset five-minute sum
           return { low: 0, avg: 0, high: 0, count: 0 };
         }
         return prevSum;
@@ -179,14 +170,12 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     return () => clearInterval(fiveMinuteInterval);
   }, []);
 
-  // Fetch gas data every 10 seconds
   useEffect(() => {
     fetchGasData();
     let fetchInterval = setInterval(fetchGasData, 10000);
     return () => clearInterval(fetchInterval);
   }, []);
 
-  // Common graph options (extracted to reduce redundancy)
   let commonOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -298,8 +287,7 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     elements: {
       line: {
         tension: 0.4,
-        // stepped: 'false',
-        spanGaps: true, // Connect points despite gaps
+        spanGaps: true,
       },
       point: {
         radius: 0,
@@ -313,7 +301,6 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     },
   };
 
-  // Common dataset style for both graphs
   let getDatasetStyle = () => [
     {
       label: 'Low',
@@ -346,34 +333,31 @@ let GasGraphSwitcher = ({nextUpdateIn}) =>
     datasets: getDatasetStyle(),
   };
 
-  return (<>
-    <div className="update-time" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-
-    {activeGraph === '1hour' ? <span>Next Update: {nextUpdate1Hour}s</span> 
+  return (
+    <>
+      <div className="update-time" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        {activeGraph === '1hour' ? <span>Next Update: {nextUpdate1Hour}s</span> 
           : <span>Next Update: {nextUpdate24Hour}s</span>}
-
-
-    
-  </div>
-    <div className="class_1">
-      <div className="class_2">
-        <button 
-          onClick={() => setActiveGraph('1hour')}
-          className={activeGraph === '1hour' ? 'active' : ''}
-        >
-          Last 1 Hour
-        </button>
-        <button 
-          onClick={() => setActiveGraph('24hour')}
-          className={activeGraph === '24hour' ? 'active' : ''}
-        >
-          Last 24 Hours
-        </button>
       </div>
-      <div style={{ width: '100%', height: '400px', margin: '0 auto' }}>
-        <Line data={data} options={commonOptions} />
+      <div className="class_1">
+        <div className="class_2">
+          <button 
+            onClick={() => setActiveGraph('1hour')}
+            className={activeGraph === '1hour' ? 'active' : ''}
+          >
+            Last 1 Hour
+          </button>
+          <button 
+            onClick={() => setActiveGraph('24hour')}
+            className={activeGraph === '24hour' ? 'active' : ''}
+          >
+            Last 24 Hours
+          </button>
+        </div>
+        <div style={{ width: '100%', height: '400px', margin: '0 auto' }}>
+          <Line data={data} options={commonOptions} />
+        </div>
       </div>
-    </div>
     </>
   );
 };

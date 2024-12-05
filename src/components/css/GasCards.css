@@ -73,7 +73,6 @@
   color: #B0B0B0;
 }
 
-/* Status colors */
 .low {
   color: #4DFF91;
 }
@@ -86,7 +85,6 @@
   color: #FF4D4D;
 }
 
-/* Card specific gradients */
 .low-card:hover {
   background: linear-gradient(145deg, rgba(18, 18, 18, 0.85), rgba(77, 255, 145, 0.1));
 }
@@ -99,7 +97,6 @@
   background: linear-gradient(145deg, rgba(18, 18, 18, 0.85), rgba(255, 77, 77, 0.1));
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -113,7 +110,7 @@
 
 @keyframes scaleIn {
   from {
-    transform: scale(0.9);
+    transform: scale(0.95);
     opacity: 0;
   }
   to {
@@ -122,7 +119,6 @@
   }
 }
 
-/* Responsive design */
 @media (max-width: 1024px) {
   .card-container {
     flex-direction: column;
