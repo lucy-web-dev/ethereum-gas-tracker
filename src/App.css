@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   margin: 0;
   padding: 0;
@@ -37,7 +39,6 @@
   gap: 0.5rem;
   padding: 4px 8px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .status-text {
@@ -154,7 +155,6 @@ header h1 {
   align-items: center;
   gap: 0.5rem;
   padding: 0.2rem 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;

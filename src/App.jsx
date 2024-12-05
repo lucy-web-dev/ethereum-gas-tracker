@@ -297,9 +297,7 @@ function App()
             <GasGraphSwitcher nextUpdateIn ={nextUpdateIn}></GasGraphSwitcher>
           </section>
         </main>
-        <footer className="app-footer glass-container">
-          <Footer></Footer>
-        </footer>
+        <Footer/>
       </div>
     </div>
   );
