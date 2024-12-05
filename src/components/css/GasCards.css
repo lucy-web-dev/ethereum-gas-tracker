@@ -3,8 +3,6 @@
   justify-content: space-around;
   gap: 2rem;
   padding: 2rem;
-  /* background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px); */
 }
 
 .card {
@@ -136,4 +134,26 @@
     max-width: 320px;
     margin-bottom: 1rem;
   }
+}
+
+.gas-tracker-container {
+  position: relative;
+  width: 100%;
+  padding-top: 2rem;
+}
+
+.status-updates {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.last-block,
+.next-update {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #E0E0E0;
 }

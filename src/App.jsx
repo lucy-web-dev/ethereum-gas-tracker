@@ -208,80 +208,68 @@ function App()
         <div className="gradient-sphere gradient-3"></div>
       </div>
       
-      <header className="app-header glass-container">
-        <div className="header-content">
-          <h1 className="title">Ethereum Gas Tracker</h1>
-          <div className="header-stats">
-            <div className="stat-item">
-              <span className="label">ETH Price:</span>
-              <span className="value">${ethPrice.toFixed(2)}</span>
+      <div className="app-container">
+        <header className="glass-header">
+          <h1>Ethereum Gas Tracker</h1>
+          <div className="header-content">
+            <div className="header-subtitle">
+              <div className="update-info">
+                <span>Last Update: {lastRefreshed}</span>
+                <span className="eth-price">ETH Price: ${ethPrice.toFixed(2)}</span>
+              </div>
             </div>
-            <div className="stat-item">
-              <span className="label">Last Block:</span>
-              <span className="value">{lastBlock}</span>
-            </div>
-            <div className="stat-item">
-              <span className="label">Base Fee:</span>
-              <span className="value">{basefee_i ? parseFloat(basefee_i).toFixed(2) : 'Loading...'} gwei</span>
-            </div>
-            <div className="stat-item update-timer">
-              <span className="label">Next Update:</span>
-              <span className="value">{nextUpdateIn}s</span>
+            <div className="network-status">
+              <span className="status-dot"></span>
+              <span>Mainnet</span>
             </div>
           </div>
-        </div>
-        <div className="update-time">
-          <span className="label">Last Updated:</span>
-          <span className="value">{currentTime}</span>
-          <span className="status-dot"></span>
-          <span className="status-text">Mainnet</span>
-        </div>
-      </header>
+        </header>
 
-      <main className="app-content">
-        <section className="gas-cards-section glass-container">
-          <GasCards gasData={gasData} />
-        </section>
+        <main className="app-content">
+          <section className="gas-cards-section glass-container">
+            <GasCards gasData={gasData} nextUpdateIn={nextUpdateIn} lastBlock={lastBlock} />
+          </section>
 
-        <section className="gas-table-section glass-container">
-          <div className="update-time" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-            <span>Next Update: {nextUpdateIn}s</span>
-          </div>
-          <h2 className="section-title">Transaction Costs</h2>
-          <div className="table-wrapper">
-            <GasTable 
-              transactionData={paginatedData} 
-              gasData={gasData} 
-              ethPrice={ethPrice} 
-              onSort={handleSort} 
-              sortConfig={sortConfig} 
-            />
-            <div className="pagination">
-              <select onChange={(e) => setRowsPerPage(Number(e.target.value))} value={rowsPerPage} className="glass-select">
-                <option value={10}>10 rows</option>
-                <option value={15}>15 rows</option>
-                <option value={25}>25 rows</option>
-                <option value={100}>100 rows</option>
-              </select>
-              <button className="pagination-btn" onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}>
-                <span className="btn-text">Previous</span>
-              </button>
-              <span className="page-info">Page {currentPage} of {Math.ceil(sortedData.length / rowsPerPage)}</span>
-              <button className="pagination-btn" onClick={() => setCurrentPage(Math.min(currentPage + 1, Math.ceil(sortedData.length / rowsPerPage)))}>
-                <span className="btn-text">Next</span>
-              </button>
+          <section className="gas-table-section glass-container">
+            <div className="update-time" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+              <span>Next Update: {nextUpdateIn}s</span>
             </div>
-          </div>
-        </section>
+            <h2 className="section-title">Transaction Costs</h2>
+            <div className="table-wrapper">
+              <GasTable 
+                transactionData={paginatedData} 
+                gasData={gasData} 
+                ethPrice={ethPrice} 
+                onSort={handleSort} 
+                sortConfig={sortConfig} 
+              />
+              <div className="pagination">
+                <select onChange={(e) => setRowsPerPage(Number(e.target.value))} value={rowsPerPage} className="glass-select">
+                  <option value={10}>10 rows</option>
+                  <option value={15}>15 rows</option>
+                  <option value={25}>25 rows</option>
+                  <option value={100}>100 rows</option>
+                </select>
+                <button className="pagination-btn" onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}>
+                  <span className="btn-text">Previous</span>
+                </button>
+                <span className="page-info">Page {currentPage} of {Math.ceil(sortedData.length / rowsPerPage)}</span>
+                <button className="pagination-btn" onClick={() => setCurrentPage(Math.min(currentPage + 1, Math.ceil(sortedData.length / rowsPerPage)))}>
+                  <span className="btn-text">Next</span>
+                </button>
+              </div>
+            </div>
+          </section>
 
-        <section className="gas-graph-section glass-container">
-          <h2 className="section-title"style={{ marginTop: '14px',marginLeft:'10px'}} >Gas Price Trends</h2>
-          <GasGraphSwitcher nextUpdateIn ={nextUpdateIn}></GasGraphSwitcher>
-        </section>
-      </main>
-      <footer className="app-footer glass-container">
-        <Footer></Footer>
-      </footer>
+          <section className="gas-graph-section glass-container">
+            <h2 className="section-title"style={{ marginTop: '14px',marginLeft:'10px'}} >Gas Price Trends</h2>
+            <GasGraphSwitcher nextUpdateIn ={nextUpdateIn}></GasGraphSwitcher>
+          </section>
+        </main>
+        <footer className="app-footer glass-container">
+          <Footer></Footer>
+        </footer>
+      </div>
     </div>
   );
 }

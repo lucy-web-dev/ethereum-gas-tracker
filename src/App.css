@@ -8,23 +8,6 @@
   box-sizing: border-box;
 }
 
-/* 
-.button-group button {
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  cursor: pointer;
-  background: #444;
-  color: white;
-  border-radius: 5px;
-}
-
-.button-group button.active {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-} */
-
 /* Default button styles */
 .button-group button {
   background-color: rgba(255, 255, 255, 0.05);; /* Light background */
@@ -54,11 +37,6 @@
 }
 
 
-
-
-
-/* ... existing code ... */
-
 .network-status {
   display: flex;
   align-items: center;
@@ -68,15 +46,6 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* .status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--neon-green);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--neon-green),
-              0 0 5px rgba(255, 255, 255, 0.5);
-} */
-
 .status-text {
   color: var(--neon-green);
   font-weight: 500;
@@ -84,13 +53,6 @@
   text-shadow: 0 0 10px var(--neon-green),
                0 0 5px rgba(25, 25, 25, 0.5);
 }
-
-/* ... existing code ... */
-
-
-
-
-
 
 :root {
   /* Base Colors */
@@ -138,41 +100,6 @@ body {
   overflow: hidden;
 }
 
-.gradient-sphere {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.5;
-}
-
-.gradient-1 {
-  background: var(--neon-cyan);
-  width: 300px;
-  height: 300px;
-  top: -50px;
-  left: -50px;
-}
-
-.gradient-2 {
-  background: var(--neon-magenta);
-  width: 400px;
-  height: 400px;
-  top: 40%;
-  right: -100px;
-}
-
-.gradient-3 {
-  background: var(--neon-purple);
-  width: 350px;
-  height: 350px;
-  bottom: -50px;
-  left: 30%;
-}
-
-
-
-
-
 /* Glass Container */
 .glass-container {
   background: var(--glass-bg);
@@ -187,21 +114,21 @@ body {
 }
 
 /* Header Styles */
-.app-header {
+.glass-header {
+  text-align: center;
   padding: 2rem;
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   margin-bottom: 2rem;
+  border-radius: 15px;
+  position: relative;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-family: 'Space Grotesk', sans-serif;
+header h1 {
   font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   background: linear-gradient(to right, var(--neon-cyan), var(--neon-magenta));
   -webkit-background-clip: text;
@@ -209,41 +136,56 @@ body {
   color: transparent;
 }
 
-.eth-price {
-  font-family: 'JetBrains Mono', monospace;
+.header-content {
+  position: relative;
+  width: 100%;
 }
 
-.eth-price .value {
-  color: var(--neon-cyan);
-  margin-left: 0.5rem;
+.header-subtitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.update-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: #E0E0E0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}
+
+.update-info .eth-price {
+  color: #E0E0E0;  /* Changed to white */
 }
 
 .network-status {
+  position: absolute;
+  bottom: -1.5rem;
+  right: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #E0E0E0;
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: var(--neon-green);
+  background-color: #00ff00;
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--neon-green);
+  box-shadow: 0 0 10px #00ff00;
+  display: inline-block;
 }
 
-
-
-.update-time {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  color: #E0E0E0;
-  padding: 6px 12px;
-}
-
+/* Header Stats */
 .header-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -273,6 +215,14 @@ body {
 
 .update-timer .value {
   color: var(--neon-yellow);
+}
+
+.update-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: #E0E0E0;
+  margin-right: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 /* Main Content */
